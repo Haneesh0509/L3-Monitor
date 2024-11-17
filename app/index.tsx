@@ -17,15 +17,16 @@ const App = () => {
     useEffect(() => {
         StatusBar.setBarStyle('dark-content');
         StatusBar.setBackgroundColor('#e0f7fa');
-    });    
+    });
 
     // Fetch data from the server
     const fetchData = async () => {
         try {
             const response = await fetch(`http://${serverIp}:5500/data/get`);
             const data = await response.json();
+            console.log(data);
             setTemperature(data.temperature);
-            setIsLightOn(data.isLightOn);
+            setIsLightOn(data.isGrowLightOn);
             setBrightness(data.brightness);
             triggerShake(); // Trigger shake animation on data update
         } catch (error) {
@@ -107,7 +108,7 @@ const App = () => {
                 <Text style={styles.label}>Server IP: {serverIp}</Text>
                 <Text style={styles.label}>Temperature: {temperature ?? 'Loading...'}°C</Text>
                 <Text style={styles.label}>Grow Light Status: {isLightOn ? 'On' : 'Off'}</Text>
-                {isLightOn && <Text style={styles.label}>Brightness: {brightness}%</Text>}
+                {isLightOn && <Text style={styles.label}>Brightness: {brightness}</Text>}
 
                 {/* Refresh Button in Top Right Corner */}
                 <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
